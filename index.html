@@ -133,7 +133,7 @@
       placeholder="🔎 Поиск вакансии..."
       oninput="searchVacancies()"
     >
-    <button onclick="showMessage()">
+    <button onclick="searchVacancies(true)">
       Найти работу
     </button>
   </div>
@@ -176,23 +176,23 @@
     alert("Отклик на вакансию: " + job);
   }
 
-  function showMessage() {
-    alert("Введите название вакансии в поиске.");
-  }
-
-  function searchVacancies() {
-    const text =
-      document.getElementById("searchInput").value.toLowerCase();
+  function searchVacancies(showEmptyMessage = false) {
+    const input = document.getElementById("searchInput");
+    const text = input.value.trim().toLowerCase();
 
     const cards =
       document.querySelectorAll(".vacancy");
 
     cards.forEach(card => {
       card.style.display =
-        card.innerText.toLowerCase().includes(text)
+        !text || card.innerText.toLowerCase().includes(text)
           ? "block"
           : "none";
     });
+
+    if (showEmptyMessage && !text) {
+      input.focus();
+    }
   }
 
   function showProfile() {
