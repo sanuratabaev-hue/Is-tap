@@ -7,7 +7,11 @@
   <title>IS-TAP — Найди работу</title>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: Arial, sans-serif;
@@ -24,8 +28,15 @@
       box-shadow: 0 3px 12px rgba(23, 105, 255, .2);
     }
 
-    header h1 { font-size: 32px; margin-bottom: 6px; }
-    header p { opacity: .92; font-size: 15px; }
+    header h1 {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      opacity: .92;
+      font-size: 15px;
+    }
 
     .container {
       width: 100%;
@@ -38,158 +49,372 @@
       background: white;
       padding: 15px;
       border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
       margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
     }
 
-    input {
+    .search input {
       width: 100%;
       padding: 14px;
-      border: 1px solid #d9dee8;
-      border-radius: 10px;
+      border: 1px solid #dce2ed;
+      border-radius: 12px;
       font-size: 16px;
       outline: none;
-      margin-bottom: 10px;
     }
 
-    input:focus { border-color: #1769ff; }
+    .search input:focus {
+      border-color: #1769ff;
+    }
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: 0;
-      border-radius: 10px;
+    .jobs {
+      display: grid;
+      gap: 14px;
+    }
+
+    .job {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
+    }
+
+    .job h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #1769ff;
+    }
+
+    .job p {
+      margin: 7px 0;
+      line-height: 1.45;
+    }
+
+    .job .salary {
+      font-weight: bold;
+      color: #16803c;
+    }
+
+    .apply {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 11px 16px;
       background: #1769ff;
       color: white;
-      font-size: 16px;
+      text-decoration: none;
+      border-radius: 10px;
       font-weight: bold;
+      border: none;
       cursor: pointer;
     }
 
-    button:active { transform: scale(.99); }
-
-    .vacancy {
-      background: white;
-      padding: 18px;
-      border-radius: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.07);
+    .apply:hover {
+      background: #0d56d8;
     }
-
-    .vacancy h2 { font-size: 20px; margin-bottom: 8px; }
-    .vacancy p { color: #667085; margin: 6px 0; }
-    .salary { color: #1769ff !important; font-weight: bold; }
-    .vacancy .apply-btn { margin-top: 10px; }
 
     .empty {
-      display: none;
       text-align: center;
-      color: #667085;
+      padding: 35px 15px;
+      color: #697386;
       background: white;
-      padding: 25px;
       border-radius: 16px;
     }
 
-    nav {
+    .add {
       position: fixed;
-      z-index: 10;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-top: 1px solid #ddd;
-      display: flex;
-      justify-content: space-around;
-      padding: 9px 6px;
-      box-shadow: 0 -3px 12px rgba(0,0,0,.05);
+      right: 20px;
+      bottom: 20px;
+      width: 58px;
+      height: 58px;
+      border: none;
+      border-radius: 50%;
+      background: #1769ff;
+      color: white;
+      font-size: 30px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.2);
+      cursor: pointer;
     }
 
-    nav button {
-      width: auto;
-      background: transparent;
-      color: #1769ff;
-      padding: 7px 12px;
-      font-size: 14px;
+    .add:hover {
+      background: #0d56d8;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 15px;
+    }
+
+    .modal-box input,
+    .modal-box textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 13px;
+      border: 1px solid #dce2ed;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+    }
+
+    .modal-box textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .save {
+      background: #1769ff;
+      color: white;
+    }
+
+    .cancel {
+      background: #e9edf5;
+      color: #172033;
+    }
+
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      .container {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <header>
     <h1>IS-TAP</h1>
-    <p>Найди работу рядом с собой</p>
+    <p>Найди работу быстро и удобно</p>
   </header>
 
   <main class="container">
-    <section class="search">
+
+    <div class="search">
       <input
-        type="search"
+        type="text"
         id="searchInput"
         placeholder="🔎 Поиск вакансии..."
-        aria-label="Поиск вакансии"
-        oninput="searchVacancies()"
+        oninput="searchJobs()"
       >
-      <button type="button" onclick="searchVacancies()">Найти работу</button>
-    </section>
+    </div>
 
-    <section id="vacancies" aria-label="Вакансии">
-      <article class="vacancy">
+    <div class="jobs" id="jobs">
+
+      <div class="job">
         <h2>Промоутер</h2>
         <p>📍 Ашхабад</p>
-        <p class="salary">💰 Зарплата: договорная</p>
-        <button class="apply-btn" type="button" onclick="apply('Промоутер')">Откликнуться</button>
-      </article>
+        <p>📋 Раздача рекламных материалов</p>
+        <p class="salary">💰 Зарплата: по договорённости</p>
+        <button class="apply" onclick="applyJob('Промоутер')">
+          Откликнуться
+        </button>
+      </div>
 
-      <article class="vacancy">
-        <h2>Онлайн-оператор</h2>
+      <div class="job">
+        <h2>Онлайн-помощник</h2>
         <p>🌐 Удалённая работа</p>
-        <p class="salary">💰 Зарплата: от 1500 TMT</p>
-        <button class="apply-btn" type="button" onclick="apply('Онлайн-оператор')">Откликнуться</button>
-      </article>
+        <p>📋 Работа с информацией и сообщениями</p>
+        <p class="salary">💰 Зарплата: по договорённости</p>
+        <button class="apply" onclick="applyJob('Онлайн-помощник')">
+          Откликнуться
+        </button>
+      </div>
 
-      <article class="vacancy">
-        <h2>Менеджер</h2>
+      <div class="job">
+        <h2>Оператор</h2>
         <p>📍 Ашхабад</p>
-        <p class="salary">💰 Зарплата: от 2000 TMT</p>
-        <button class="apply-btn" type="button" onclick="apply('Менеджер')">Откликнуться</button>
-      </article>
-    </section>
+        <p>📋 Работа с клиентами</p>
+        <p class="salary">💰 Зарплата: по договорённости</p>
+        <button class="apply" onclick="applyJob('Оператор')">
+          Откликнуться
+        </button>
+      </div>
 
-    <div id="empty" class="empty">😔 Вакансии не найдены.</div>
+    </div>
+
+    <div class="empty" id="empty" style="display:none;">
+      Вакансии не найдены 😔
+    </div>
+
   </main>
 
-  <nav aria-label="Навигация">
-    <button type="button" onclick="location.reload()">🏠 Главная</button>
-    <button type="button" onclick="showProfile()">👤 Профиль</button>
-    <button type="button" onclick="addVacancy()">➕ Добавить</button>
-  </nav>
+  <button class="add" onclick="openModal()" aria-label="Добавить вакансию">
+    +
+  </button>
+
+  <div class="modal" id="modal">
+    <div class="modal-box">
+
+      <h2>Добавить вакансию</h2>
+
+      <input
+        type="text"
+        id="jobTitle"
+        placeholder="Название вакансии"
+      >
+
+      <input
+        type="text"
+        id="jobLocation"
+        placeholder="Место работы"
+      >
+
+      <input
+        type="text"
+        id="jobSalary"
+        placeholder="Зарплата"
+      >
+
+      <textarea
+        id="jobDescription"
+        placeholder="Описание вакансии"
+      ></textarea>
+
+      <div class="modal-buttons">
+        <button class="cancel" onclick="closeModal()">
+          Отмена
+        </button>
+
+        <button class="save" onclick="addJob()">
+          Добавить
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <script>
-    function apply(job) {
-      alert('Отклик на вакансию: ' + job);
-    }
+    function searchJobs() {
+      const search = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
 
-    function searchVacancies() {
-      const text = document.getElementById('searchInput').value.trim().toLowerCase();
-      const cards = document.querySelectorAll('.vacancy');
+      const jobs = document.querySelectorAll(".job");
       let found = 0;
 
-      cards.forEach(card => {
-        const matches = card.innerText.toLowerCase().includes(text);
-        card.style.display = matches ? 'block' : 'none';
-        if (matches) found++;
+      jobs.forEach(function(job) {
+        const text = job.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+          job.style.display = "block";
+          found++;
+        } else {
+          job.style.display = "none";
+        }
       });
 
-      document.getElementById('empty').style.display = found === 0 ? 'block' : 'none';
+      document.getElementById("empty").style.display =
+        found === 0 ? "block" : "none";
     }
 
-    function showProfile() {
-      alert('Профиль IS-TAP\n\nРегистрация и вход подключим следующим этапом.');
+    function applyJob(title) {
+      alert(
+        "Вы выбрали вакансию: " +
+        title +
+        "\n\nСпасибо! Функцию отправки отклика подключим следующим этапом."
+      );
     }
 
-    function addVacancy() {
-      alert('Форму добавления вакансии подключим к Supabase следующим этапом.');
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
     }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function addJob() {
+      const title = document.getElementById("jobTitle").value.trim();
+      const location = document.getElementById("jobLocation").value.trim();
+      const salary = document.getElementById("jobSalary").value.trim();
+      const description = document.getElementById("jobDescription").value.trim();
+
+      if (!title) {
+        alert("Введите название вакансии.");
+        return;
+      }
+
+      const job = document.createElement("div");
+      job.className = "job";
+
+      job.innerHTML = `
+        <h2>${escapeHtml(title)}</h2>
+        <p>📍 ${escapeHtml(location || "Не указано")}</p>
+        <p>📋 ${escapeHtml(description || "Описание не указано")}</p>
+        <p class="salary">💰 Зарплата: ${escapeHtml(salary || "по договорённости")}</p>
+        <button class="apply" onclick="applyJob('${escapeJs(title)}')">
+          Откликнуться
+        </button>
+      `;
+
+      document.getElementById("jobs").prepend(job);
+
+      document.getElementById("jobTitle").value = "";
+      document.getElementById("jobLocation").value = "";
+      document.getElementById("jobSalary").value = "";
+      document.getElementById("jobDescription").value = "";
+
+      closeModal();
+      searchJobs();
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeJs(text) {
+      return text
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("modal");
+
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
   </script>
+
 </body>
 </html>
