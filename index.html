@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1769ff">
+  <title>IS-TAP — Найди работу</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1769ff, #4b8dff);
+      color: white;
+      padding: 28px 18px 24px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(23, 105, 255, .2);
+    }
+
+    header h1 {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      opacity: .92;
+      font-size: 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: auto;
+      padding: 18px 18px 90px;
+    }
+
+    .search {
+      background: white;
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
+      margin-bottom: 18px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #dce2ed;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search input:focus {
+      border-color: #1769ff;
+    }
+
+    .jobs {
+      display: grid;
+      gap: 14px;
+    }
+
+    .job {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.07);
+    }
+
+    .job h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #1769ff;
+    }
+
+    .job p {
+      margin: 7px 0;
+      line-height: 1.45;
+    }
+
+    .job .salary {
+      font-weight: bold;
+      color: #16803c;
+    }
+
+    .apply {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 11px 16px;
+      background: #1769ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .apply:hover {
+      background: #0d56d8;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: #697386;
+      background: white;
+      border-radius: 16px;
+    }
+
+    .add {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 58px;
+      height: 58px;
+      border: none;
+      border-radius: 50%;
+      background: #1769ff;
+      color: white;
+      font-size: 30px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.2);
+      cursor: pointer;
+    }
+
+    .add:hover {
+      background: #0d56d8
