@@ -418,7 +418,58 @@ async function saveVacancy() {
     alert("Произошла ошибка при сохранении.");
   }
 }
-  
+  async function loadVacancies() {
+  const container = document.getElementById("vacancies");
+
+  try {
+    const { data, error } = await supabase
+      .from("vacancies")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      container.innerHTML = `
+        <div class="empty" style="display:block;">
+          Пока вакансий нет.
+        </div>
+      `;
+      return;
+    }
+
+    data.forEach(vacancy => {
+      const card = document.createElement("article");
+      card.className = "vacancy";
+
+      card.innerHTML = `
+        <h2>${escapeHtml(vacancy.title || "")}</h2>
+        <p>🏢 ${escapeHtml(vacancy.company || "")}</p>
+        <p>📍 ${escapeHtml(vacancy.location || "")}</p>
+        <p class="salary">💰 ${escapeHtml(vacancy.salary || "По договорённости")}</p>
+        <p>${escapeHtml(vacancy.description || "")}</p>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+window.addEventListener("load", loadVacancies);
   }
 </script>
 
