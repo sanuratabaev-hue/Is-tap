@@ -182,7 +182,36 @@ async function registerUser() {
     message.textContent = "Введите email и пароль";
     return;
   }
+// Отклик на вакансию
+function apply(vacancyName) {
+  alert("Вы выбрали вакансию: " + vacancyName);
 
+  const message = document.getElementById("message");
+
+  if (message) {
+    message.textContent = "Отклик на вакансию «" + vacancyName + "» отправлен! ✅";
+  }
+}
+
+// Поиск вакансий
+function searchVacancies() {
+  const input = document.getElementById("searchInput");
+  const vacancies = document.querySelectorAll(".vacancy");
+
+  if (!input) return;
+
+  const searchText = input.value.toLowerCase().trim();
+
+  vacancies.forEach(function(vacancy) {
+    const text = vacancy.textContent.toLowerCase();
+
+    if (text.includes(searchText)) {
+      vacancy.style.display = "";
+    } else {
+      vacancy.style.display = "none";
+    }
+  });
+}
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password
