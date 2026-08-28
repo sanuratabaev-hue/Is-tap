@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1769ff">
+  <title>IS-TAP — Найди работу</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #1769ff;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      opacity: .9;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .search {
+      background: white;
+      padding: 15px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1769ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #1769ff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: .85;
+    }
+
+    .vacancy {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.07);
+    }
+
+    .vacancy h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .vacancy p {
+      color: #667085;
+      margin: 6px 0;
+    }
+
+    .salary {
+      color: #1769ff !important;
+      font-weight: bold;
+    }
+
+    .empty {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      color: #667085;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+    }
+
+    nav button {
+      width: auto;
+      background: transparent;
+      color: #1769ff;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    main {
+      padding-bottom: 85px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>IS-TAP</h1>
+  <p>Найди работу рядом с собой</p>
+</header>
+
+<main class="container">
+
+  <section class="search">
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="🔎 Поиск вакансии..."
+      aria-label="Поиск вакансии"
+      oninput="searchVacancies()"
+    >
+    <button type="button" onclick="searchVacancies()">Найти работу</button>
+  </section>
+
+  <section id="vacancies" aria-label="Вакансии">
+
+    <article class="vacancy">
+      <h2>Промоутер</h2>
+      <p>📍 Ашхабад</p>
+      <p class="salary">💰 Зарплата: договорная</p>
+      <button type="button" onclick="apply('Промоутер')">Откликнуться</button>
+    </article>
+
+    <article class="vacancy">
+      <h2>Онлайн-оператор</h2>
+      <p>🌐 Удалённая работа</p>
+      <p class="salary">💰 Зарплата: от 1500 TMT</p>
+      <button type="button" onclick="apply('Онлайн-оператор')">Откликнуться</button>
+    </article>
+
+    <article class="vacancy">
+      <h2>Менеджер</h2>
+      <p>📍 Ашхабад</p>
+      <p class="salary">💰 Зарплата: от 2000 TMT</p>
+      <button type="button" onclick="apply('Менеджер')">Откликнуться</button>
+    </article>
+
+  </section>
+
+  <div id="empty" class="empty">
+    😔 Вакансии не найдены.
+  </div>
+
+</main>
+
+<nav aria-label="Навигация">
+  <button type="button" onclick="location.reload()">🏠 Главная</button>
+  <button type="button" onclick="showProfile()">👤 Профиль</button>
+  <button type="button" onclick="addVacancy()">➕ Добавить</button>
+</nav>
+
+<script>
+  function apply(job) {
+    alert("Отклик на вакансию: " + job);
+  }
+
+  function searchVacancies() {
+    const input = document.getElementById("searchInput");
+    const text = input.value.trim().toLowerCase();
+    const cards = document.querySelectorAll(".vacancy");
+    let found = 0;
+
+    cards.forEach(card => {
+      const matches = card.innerText.toLowerCase().includes(text);
+      card.style.display = matches ? "block" : "none";
+
+      if (matches) {
+        found++;
+      }
+    });
+
+    document.getElementById("empty").style.display =
+      found === 0 ? "block" : "none";
+  }
+
+  function showProfile() {
+    alert(
+      "Профиль IS-TAP\n\n" +
+      "Регистрация и вход подключим следующим этапом."
+    );
+  }
+
+  function addVacancy() {
+    alert(
+      "Добавление вакансии\n\n" +
+      "Форму добавления вакансии подключим к Supabase следующим этапом."
+    );
+  }
+</script>
+
+</body>
+</html>
