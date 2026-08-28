@@ -304,12 +304,121 @@ async function loginUser() {
       "Регистрация и вход подключим следующим этапом."
     );
   }
+function addVacancy() {
+  const oldForm = document.getElementById("add-vacancy-form");
+  if (oldForm) oldForm.remove();
 
-  function addVacancy() {
-    alert(
-      "Добавление вакансии\n\n" +
-      "Форму добавления вакансии подключим к Supabase следующим этапом."
-    );
+  const form = document.createElement("div");
+  form.id = "add-vacancy-form";
+
+  form.innerHTML = `
+    <div style="
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.5);
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    ">
+      <div style="
+        background:white;
+        width:100%;
+        max-width:500px;
+        max-height:90vh;
+        overflow:auto;
+        border-radius:20px;
+        padding:22px;
+      ">
+        <h2 style="margin-bottom:18px;">➕ Добавить вакансию</h2>
+
+        <input id="vac-title"
+          placeholder="Название вакансии"
+          style="width:100%;padding:14px;margin-bottom:10px;">
+
+        <input id="vac-company"
+          placeholder="Название компании"
+          style="width:100%;padding:14px;margin-bottom:10px;">
+
+        <input id="vac-location"
+          placeholder="📍 Город или место работы"
+          style="width:100%;padding:14px;margin-bottom:10px;">
+
+        <input id="vac-salary"
+          placeholder="💰 Зарплата"
+          style="width:100%;padding:14px;margin-bottom:10px;">
+
+        <textarea id="vac-description"
+          placeholder="📝 Описание вакансии"
+          style="width:100%;padding:14px;margin-bottom:15px;min-height:120px;resize:vertical;"></textarea>
+
+        <button onclick="saveVacancy()"
+          style="width:100%;padding:14px;margin-bottom:10px;background:#1769ff;color:white;border:0;border-radius:10px;font-weight:bold;">
+          💾 Опубликовать
+        </button>
+
+        <button onclick="document.getElementById('add-vacancy-form').remove()"
+          style="width:100%;padding:14px;background:#ddd;color:#222;border:0;border-radius:10px;">
+          Отмена
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(form);
+}
+
+
+async function saveVacancy() {
+  const title = document.getElementById("vac-title").value.trim();
+  const company = document.getElementById("vac-company").value.trim();
+  const location = document.getElementById("vac-location").value.trim();
+  const salary = document.getElementById("vac-salary").value.trim();
+  const description = document.getElementById("vac-description").value.trim();
+
+  if (!title || !company || !location) {
+    alert("Заполни название вакансии, компанию и город.");
+    return;
+  }
+
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert("Сначала войди в аккаунт.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("vacancies")
+      .insert([{
+        title: title,
+        company: company,
+        location: location,
+        salary: salary,
+        description: description,
+        user_id: user.id
+      }]);
+
+    if (error) {
+      console.error(error);
+      alert("Ошибка сохранения: " + error.message);
+      return;
+    }
+
+    alert("✅ Вакансия опубликована!");
+
+    document.getElementById("add-vacancy-form").remove();
+
+    loadVacancies();
+
+  } catch (error) {
+    console.error(error);
+    alert("Произошла ошибка при сохранении.");
+  }
+}
+  
   }
 </script>
 
