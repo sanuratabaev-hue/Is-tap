@@ -149,7 +149,76 @@
 </head>
 
 <body>
+<!-- IS-TAP: Регистрация и вход -->
+<div id="auth-section" style="max-width:420px;margin:30px auto;padding:20px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1);font-family:Arial,sans-serif;">
+  <h2 style="text-align:center;margin-bottom:20px;">IS-TAP</h2>
 
+  <input id="auth-email" type="email" placeholder="Email"
+    style="width:100%;padding:12px;margin-bottom:10px;border:1px solid #ddd;border-radius:8px;">
+
+  <input id="auth-password" type="password" placeholder="Пароль"
+    style="width:100%;padding:12px;margin-bottom:10px;border:1px solid #ddd;border-radius:8px;">
+
+  <button onclick="registerUser()"
+    style="width:100%;padding:12px;margin-bottom:10px;background:#1769ff;color:white;border:0;border-radius:8px;">
+    Регистрация
+  </button>
+
+  <button onclick="loginUser()"
+    style="width:100%;padding:12px;background:#333;color:white;border:0;border-radius:8px;">
+    Войти
+  </button>
+
+  <p id="auth-message" style="text-align:center;margin-top:15px;"></p>
+</div>
+
+<script>
+async function registerUser() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  if (!email || !password) {
+    message.textContent = "Введите email и пароль";
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    message.textContent = "Ошибка: " + error.message;
+    return;
+  }
+
+  message.textContent = "Регистрация выполнена! Проверьте email.";
+}
+
+async function loginUser() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  if (!email || !password) {
+    message.textContent = "Введите email и пароль";
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    message.textContent = "Ошибка входа: " + error.message;
+    return;
+  }
+
+  message.textContent = "Вы успешно вошли в IS-TAP! 🎉";
+}
+</script>
 <header>
   <h1>IS-TAP</h1>
   <p>Найди работу рядом с собой</p>
