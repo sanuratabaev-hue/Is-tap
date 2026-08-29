@@ -482,8 +482,10 @@ async function saveVacancy() {
         <p>📍 ${escapeHtml(vacancy.location || "")}</p>
         <p class="salary">💰 ${escapeHtml(vacancy.salary || "По договорённости")}</p>
         <p>${escapeHtml(vacancy.description || "")}</p>
-      `;
-
+      <button type="button" onclick="apply('${escapeHtml(vacancy.title || "")}')">
+  Откликнуться
+</button>
+';
       container.appendChild(card);
     });
 
