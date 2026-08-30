@@ -327,12 +327,23 @@ async function loginUser() {
       found === 0 ? "block" : "none";
   }
 
-  function showProfile() {
-    alert(
-      "Профиль IS-TAP\n\n" +
-      "Регистрация и вход подключим следующим этапом."
-    );
+  async function showProfile() {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data.user) {
+    alert("Сначала войдите в аккаунт.");
+    return;
   }
+
+  const user = data.user;
+
+  alert(
+    "👤 Профиль IS-TAP\n\n" +
+    "📧 Email: " + user.email + "\n\n" +
+    "✅ Вы вошли в аккаунт."
+  );
+}
+ 
 function addVacancy() {
   const oldForm = document.getElementById("add-vacancy-form");
   if (oldForm) oldForm.remove();
